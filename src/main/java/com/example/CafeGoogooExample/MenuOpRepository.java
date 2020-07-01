@@ -2,11 +2,12 @@ package com.example.CafeGoogooExample;
 
 import org.springframework.data.repository.CrudRepository;
 
-// This will be AUTO IMPLEMENTED by Spring into a Bean called userRepository
-// CRUD refers Create, Read, Update, Delete
-
+/**
+ * Repository for the menu options
+ */
 public interface MenuOpRepository extends CrudRepository<MenuOp, Integer>  {
 
+     //method to delete menu options by their menuid property
      public void deleteByMenuid(String menuid);
 
 }

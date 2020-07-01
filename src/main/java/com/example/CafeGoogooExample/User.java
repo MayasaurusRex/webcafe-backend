@@ -2,7 +2,10 @@ package com.example.CafeGoogooExample;
 
 import javax.persistence.*;
 
-@Entity // This tells Hibernate to make a table out of this class
+/**
+ * Entity table for user, getters and setters and constructor
+ */
+@Entity
 public class User {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)

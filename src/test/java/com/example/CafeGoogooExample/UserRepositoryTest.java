@@ -2,19 +2,21 @@ package com.example.CafeGoogooExample;
 
 import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 
-@Ignore
-@SpringBootTest
+@RunWith(SpringRunner.class)
+@DataJpaTest
 public class UserRepositoryTest {
 
     @Autowired
-    private UserRepository userRepository;
+     UserRepository userRepository;
 
     @Test
     public void givenStudent_whenSave_thenGetOk() {

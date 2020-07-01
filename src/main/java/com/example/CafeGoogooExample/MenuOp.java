@@ -6,7 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
+/**
+ * Entity table for menu options, getters and setters
+ */
 @Entity // This tells Hibernate to make a table out of this class
 public class MenuOp {
     @Id

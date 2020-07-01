@@ -7,38 +7,51 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller // This means that this class is a Controller
-@RequestMapping(path="/order/items") // This means URL's start with /demo (after Application path)
+/**
+ * Controller class for order items, with path '/order/items' after application path
+ */
+@Controller
+@RequestMapping(path="/order/items")
 public class OrderItemsController {
 
     public static final Logger LOG = LoggerFactory.getLogger(com.example.CafeGoogooExample.UserController.class);
 
+    //Auto-generated bean to handle orderItemsRepository data
     @Autowired
     private OrderItemsRepository orderItemsRepository;
 
-    //ADD
+    /**
+     * Post mapping to add an order item to the repository
+     * @param orderId order number
+     * @param menuId id of the menu item
+     * @param quantity quantity user picks
+     * @param price price of the menu item
+     * @return response entity 'ok' for order item added
+     */
     @CrossOrigin(origins = "http://localhost:8081")
-    @PostMapping(path="/add") // Map ONLY POST Requests
+    @PostMapping(path="/add") // path name after '/order/items'
     public @ResponseBody ResponseEntity<OrderItems> addOrderItem (@RequestParam String orderId, @RequestParam String menuId,
             @RequestParam Integer quantity, @RequestParam String price) {
-        // @ResponseBody means the returned String is the response, not a view name
-        // @RequestParam means it is a parameter from the GET or POST request
-
         LOG.info("orderId: {}, menuId: {}, quantity: {}, price:{}", orderId,menuId,quantity,price);
+        //create new order item based on params
         OrderItems orderItem = new OrderItems();
         orderItem.setOrderId(orderId);
         orderItem.setMenuId(menuId);
         orderItem.setQuantity(quantity);
         orderItem.setPrice(price);
+        //save the order item in the repository database, return the response entity
         orderItemsRepository.save(orderItem);
         return ResponseEntity.ok(orderItem);
     }
 
-    //GET
+    /**
+     * Get mapping for all items in orders
+     * @return all order items stored in the database
+     */
     @CrossOrigin(origins = "http://localhost:8081")
-    @GetMapping(path="/all")
+    @GetMapping(path="/all") // path name after '/order/items'
     public @ResponseBody ResponseEntity<Iterable<OrderItems>> getOrderItems() {
-        // This returns a JSON or XML with the users
+        // This returns a JSON with the order items
         return ResponseEntity.ok(orderItemsRepository.findAll());
     }
 

@@ -1,15 +1,14 @@
 package com.example.CafeGoogooExample;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.List;
 
-@Entity // This tells Hibernate to make a table out of this class
+/**
+ * Entity table for menu items, getters and setters
+ */
+@Entity
 public class Menu {
 
     @Id
@@ -43,6 +42,5 @@ public class Menu {
     public void setPrice(String price) {
         this.price = price;
     }
-
 
 }

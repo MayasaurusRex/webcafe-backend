@@ -7,38 +7,51 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller // This means that this class is a Controller
-@RequestMapping(path="/order/options") // This means URL's start with /demo (after Application path)
+/**
+ * Controller class for order options, with path '/order/options' after application path
+ */
+@Controller
+@RequestMapping(path="/order/options")
 public class OrderOptionsController {
 
     public static final Logger LOG = LoggerFactory.getLogger(com.example.CafeGoogooExample.UserController.class);
 
+    //Auto-generated bean to handle orderOptionsRepository data
     @Autowired
     private OrderOptionsRepository orderOptionsRepository;
 
-    //ADD
+    /**
+     * Post mapping to add an order item to the repository
+     * @param orderId order number
+     * @param menuOpId id of the menu option
+     * @param quantity quantity user picks
+     * @param price price of the menu option
+     * @return response entity 'ok' for order option added
+     */
     @CrossOrigin(origins = "http://localhost:8081")
     @PostMapping(path="/add") // Map ONLY POST Requests
     public @ResponseBody ResponseEntity<OrderOptions> addOrderOption (@RequestParam String orderId, @RequestParam String menuOpId,
                                                               @RequestParam Integer quantity, @RequestParam String price) {
-        // @ResponseBody means the returned String is the response, not a view name
-        // @RequestParam means it is a parameter from the GET or POST request
-
         LOG.info("orderId: {}, menuId: {}, quantity: {}, price:{}", orderId,menuOpId,quantity,price);
+        //create new order option based on params
         OrderOptions orderOption = new OrderOptions();
         orderOption.setOrderId(orderId);
         orderOption.setMenuOpId(menuOpId);
         orderOption.setQuantity(quantity);
         orderOption.setPrice(price);
+        //save the order option in the repository database, return the response entity
         orderOptionsRepository.save(orderOption);
         return ResponseEntity.ok(orderOption);
     }
 
-    //GET
+    /**
+     * Get mapping for all items in orders
+     * @return all order options stored in the database
+     */
     @CrossOrigin(origins = "http://localhost:8081")
     @GetMapping(path="/all")
     public @ResponseBody ResponseEntity<Iterable<OrderOptions>> getOrderOptions() {
-        // This returns a JSON or XML with the users
+        // This returns a JSON with the order options
         return ResponseEntity.ok(orderOptionsRepository.findAll());
     }
 
